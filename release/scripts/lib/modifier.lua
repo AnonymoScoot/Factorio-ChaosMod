@@ -2,8 +2,8 @@ modifier = {}
 
 ------------// Force Modifiers //------------
 function modifier.applyForceModifier(mod)
-    local pick = math.random()
-    local distanceToBottom = math.abs(game.forces.player[mod] - modifier[mod].minValue)
+    local pick = mathlib.random()
+    local distanceToBottom = mathlib.abs(game.forces.player[mod] - modifier[mod].minValue)
     local minValue = 0
     local maxValue = 0
 
@@ -13,19 +13,19 @@ function modifier.applyForceModifier(mod)
     else
         minValue = modifier[mod].increment
         maxValue = distanceToBottom +
-            math.clamp(modifier[mod].exceedValue - distanceToBottom, 0, modifier[mod].exceedValue)
+            mathlib.clamp(modifier[mod].exceedValue - distanceToBottom, 0, modifier[mod].exceedValue)
     end
 
-    local randomValue = math.roundTo(math.randomRange(minValue, maxValue), modifier[mod].increment)
+    local randomValue = mathlib.roundTo(mathlib.randomRange(minValue, maxValue), modifier[mod].increment)
 
-    game.forces.player[mod] = math.clampBottom(game.forces.player[mod] + randomValue, modifier[mod].minValue)
+    game.forces.player[mod] = mathlib.clampBottom(game.forces.player[mod] + randomValue, modifier[mod].minValue)
 
     return randomValue
 end
 
 function modifier.revertForceModifier(mod, value)
-    game.forces.player[mod] = math.clampBottom(
-        math.roundTo(game.forces.player[mod] - value, modifier[mod].increment),
+    game.forces.player[mod] = mathlib.clampBottom(
+        mathlib.roundTo(game.forces.player[mod] - value, modifier[mod].increment),
         modifier[mod].minValue)
 end
 
@@ -152,8 +152,8 @@ modifier["train_braking_force_bonus"] = {
 
 ------------// Difficulty Modifiers //------------
 function modifier.applyDifficulyModifier(mod)
-    local pick = math.random()
-    local distanceToBottom = math.abs(game.difficulty_settings[mod] - modifier[mod].minValue)
+    local pick = mathlib.random()
+    local distanceToBottom = mathlib.abs(game.difficulty_settings[mod] - modifier[mod].minValue)
     local minValue = 0
     local maxValue = 0
 
@@ -163,19 +163,20 @@ function modifier.applyDifficulyModifier(mod)
     else
         minValue = modifier[mod].increment
         maxValue = distanceToBottom +
-            math.clamp(modifier[mod].exceedValue - distanceToBottom, 0, modifier[mod].exceedValue)
+            mathlib.clamp(modifier[mod].exceedValue - distanceToBottom, 0, modifier[mod].exceedValue)
     end
 
-    local randomValue = math.roundTo(math.randomRange(minValue, maxValue), modifier[mod].increment)
+    local randomValue = mathlib.roundTo(mathlib.randomRange(minValue, maxValue), modifier[mod].increment)
 
-    game.difficulty_settings[mod] = math.clampBottom(game.difficulty_settings[mod] + randomValue, modifier[mod].minValue)
+    game.difficulty_settings[mod] = mathlib.clampBottom(game.difficulty_settings[mod] + randomValue,
+        modifier[mod].minValue)
 
     return randomValue
 end
 
 function modifier.revertDifficulyModifier(mod, value)
-    game.difficulty_settings[mod] = math.clampBottom(
-        math.roundTo(game.difficulty_settings[mod] - value, modifier[mod].increment),
+    game.difficulty_settings[mod] = mathlib.clampBottom(
+        mathlib.roundTo(game.difficulty_settings[mod] - value, modifier[mod].increment),
         modifier[mod].minValue)
 end
 
@@ -187,8 +188,8 @@ modifier["technology_price_multiplier"] = {
 
 ------------// MapSettings Modifiers //------------
 function modifier.applyMapSettingsModifier(setting, mod)
-    local pick = math.random()
-    local distanceToBottom = math.abs(game.map_settings[setting][mod] - modifier[mod].minValue)
+    local pick = mathlib.random()
+    local distanceToBottom = mathlib.abs(game.map_settings[setting][mod] - modifier[mod].minValue)
     local minValue = 0
     local maxValue = 0
 
@@ -200,17 +201,18 @@ function modifier.applyMapSettingsModifier(setting, mod)
         maxValue = modifier[mod].maxValue - game.map_settings[setting][mod]
     end
 
-    local randomValue = math.roundTo(math.randomRange(minValue, maxValue), modifier[mod].increment)
+    local randomValue = mathlib.roundTo(mathlib.randomRange(minValue, maxValue), modifier[mod].increment)
 
-    game.map_settings[setting][mod] = math.clamp(game.map_settings[setting][mod] + randomValue, modifier[mod].minValue,
+    game.map_settings[setting][mod] = mathlib.clamp(game.map_settings[setting][mod] + randomValue, modifier[mod]
+        .minValue,
         modifier[mod].maxValue)
 
     return randomValue
 end
 
 function modifier.revertMapSettingsModifier(setting, mod, value)
-    game.map_settings[setting][mod] = math.clamp(
-        math.roundTo(game.map_settings[setting][mod] - value, modifier[mod].increment), modifier[mod].minValue,
+    game.map_settings[setting][mod] = mathlib.clamp(
+        mathlib.roundTo(game.map_settings[setting][mod] - value, modifier[mod].increment), modifier[mod].minValue,
         modifier[mod].maxValue)
 end
 
@@ -252,7 +254,7 @@ modifier["pollution_factor"] = {
 
 ------------// ManGenSettings Modifiers //------------
 function modifier.applyMapGenSettingsModifier(surface, fn, modifier_mod)
-    local randomEntry = math.random(#modifier[modifier_mod])
+    local randomEntry = mathlib.random(#modifier[modifier_mod])
     local randomValue = modifier[modifier_mod][randomEntry].value
 
     surface.map_gen_settings = fn(randomValue)

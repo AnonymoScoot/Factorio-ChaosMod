@@ -25,12 +25,12 @@ addChaosEffect({
 		local surface = game.players[#game.players].surface
 		local randomChunkPosition = surface.get_random_chunk()
 		local boundingBox = {
-			{ randomChunkPosition.x * 32 + math.random(-32, 32) * 32,
+			{ randomChunkPosition.x * 32 + mathlib.random(-32, 32) * 32,
 				randomChunkPosition.y * 32 +
-				math.random(-32, 32) * 32 },
-			{ randomChunkPosition.x * 32 + math.random(-32, 32) * 32,
+				mathlib.random(-32, 32) * 32 },
+			{ randomChunkPosition.x * 32 + mathlib.random(-32, 32) * 32,
 				randomChunkPosition.y * 32 +
-				math.random(-32, 32) * 32 },
+				mathlib.random(-32, 32) * 32 },
 		}
 
 		game.forces.player.chart(surface, boundingBox)
@@ -172,7 +172,7 @@ addChaosEffect({
 		end
 
 		for i = 1, #technologies do
-			local index = math.random(1, #keys)
+			local index = mathlib.random(1, #keys)
 			local key = keys[index]
 			local tech = technologies[key]
 
@@ -197,7 +197,7 @@ addChaosEffect({
 
 		for key, tech in pairs(technologies) do
 			if not tech.researched then
-				game.forces.player.set_saved_technology_progress(tech, math.random() * 0.99)
+				game.forces.player.set_saved_technology_progress(tech, mathlib.random() * 0.99)
 			end
 		end
 	end,
@@ -218,7 +218,7 @@ addChaosEffect({
 		end
 
 		for i = 1, #recipes do
-			local index = math.random(1, #keys)
+			local index = mathlib.random(1, #keys)
 			local key = keys[index]
 			local recipe = recipes[key]
 
@@ -364,7 +364,7 @@ addChaosEffect({
 			gain = modifyingValue < 0 and -2 or 2,
 			description = {
 				modifyingValue < 0 and "chaos-description.worker-robot-storage-decreased" or
-				"chaos-description.worker-robot-storage-decreased", math.abs(modifyingValue) },
+				"chaos-description.worker-robot-storage-decreased", mathlib.abs(modifyingValue) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -380,7 +380,7 @@ addChaosEffect({
 	description = { "chaos-description.research-progress-random" },
 	effectFunction = function()
 		if game.forces.player.current_research then
-			game.forces.player.research_progress = math.random()
+			game.forces.player.research_progress = mathlib.random()
 		end
 	end,
 
@@ -397,7 +397,7 @@ addChaosEffect({
 			gain = modifyingValue < 0 and -2 or 2,
 			description = {
 				modifyingValue < 0 and "chaos-description.inserter-stack-size-bonus-decreased" or
-				"chaos-description.inserter-stack-size-bonus-increased", math.abs(modifyingValue) },
+				"chaos-description.inserter-stack-size-bonus-increased", mathlib.abs(modifyingValue) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -417,7 +417,7 @@ addChaosEffect({
 			gain = modifyingValue < 0 and -2 or 2,
 			description = {
 				modifyingValue < 0 and "chaos-description.stack-inserter-capacity-bonus-decreased" or
-				"chaos-description.stack-inserter-capacity-bonus-increased", math.abs(modifyingValue) },
+				"chaos-description.stack-inserter-capacity-bonus-increased", mathlib.abs(modifyingValue) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -437,7 +437,7 @@ addChaosEffect({
 			gain = modifyingValue < 0 and -2 or 2,
 			description = {
 				modifyingValue < 0 and "chaos-description.character-trash-slot-count-decreased" or
-				"chaos-description.character-trash-slot-count-increased", math.abs(modifyingValue) },
+				"chaos-description.character-trash-slot-count-increased", mathlib.abs(modifyingValue) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -457,7 +457,7 @@ addChaosEffect({
 			gain = modifyingValue < 0 and -2 or 2,
 			description = {
 				modifyingValue < 0 and "chaos-description.maximum-following-robot-count-decreased" or
-				"chaos-description.maximum-following-robot-count-increased", math.abs(modifyingValue) },
+				"chaos-description.maximum-following-robot-count-increased", mathlib.abs(modifyingValue) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -754,32 +754,32 @@ addChaosEffect({
 		local surface = game.players[#game.players].surface
 		local randomChunkPosition = surface.get_random_chunk()
 		local mapPosition = { randomChunkPosition.x * 32, randomChunkPosition.y * 32 }
-		local pick = math.random(1, 4)
+		local pick = mathlib.random(1, 4)
 		local randomNumber
 
 		if pick == 1 then
-			randomNumber = math.randomRange(50, 100)
+			randomNumber = mathlib.randomRange(50, 100)
 			surface.pollute(mapPosition, randomNumber)
 			return {
 				description = { "chaos-description.pollute-random-small" },
 				gain = -1
 			}
 		elseif pick == 2 then
-			randomNumber = math.randomRange(100, 500)
+			randomNumber = mathlib.randomRange(100, 500)
 			surface.pollute(mapPosition, randomNumber)
 			return {
 				description = { "chaos-description.pollute-random-medium" },
 				gain = -2
 			}
 		elseif pick == 3 then
-			randomNumber = math.randomRange(500, 1000)
+			randomNumber = mathlib.randomRange(500, 1000)
 			surface.pollute(mapPosition, randomNumber)
 			return {
 				description = { "chaos-description.pollute-random-large" },
 				gain = -3
 			}
 		else
-			randomNumber = math.randomRange(1000, 10000)
+			randomNumber = mathlib.randomRange(1000, 10000)
 			surface.pollute(mapPosition, randomNumber)
 			return {
 				description = { "chaos-description.pollute-random-very-large" },
@@ -800,7 +800,7 @@ addChaosEffect({
 		local randomChunkPosition = surface.get_random_chunk()
 		local mapPosition = { randomChunkPosition.x * 32, randomChunkPosition.y * 32 }
 
-		surface.build_enemy_base(mapPosition, math.random() * (30 - 5) + 5, game.forces.enemy)
+		surface.build_enemy_base(mapPosition, mathlib.random() * (30 - 5) + 5, game.forces.enemy)
 	end,
 
 })
@@ -814,12 +814,12 @@ addChaosEffect({
 		local surface = game.players[#game.players].surface
 		local randomChunkPosition = surface.get_random_chunk()
 		local boundingBox = {
-			{ randomChunkPosition.x * 32 + math.random(-32, 32) * 32,
+			{ randomChunkPosition.x * 32 + mathlib.random(-32, 32) * 32,
 				randomChunkPosition.y * 32 +
-				math.random(-32, 32) * 32 },
-			{ randomChunkPosition.x * 32 + math.random(-32, 32) * 32,
+				mathlib.random(-32, 32) * 32 },
+			{ randomChunkPosition.x * 32 + mathlib.random(-32, 32) * 32,
 				randomChunkPosition.y * 32 +
-				math.random(-32, 32) * 32 },
+				mathlib.random(-32, 32) * 32 },
 		}
 
 		surface.deconstruct_area { area = boundingBox, force = game.forces.player }
@@ -873,7 +873,7 @@ addChaosEffect({
 	effectFunction = function()
 		local surface = game.players[#game.players].surface
 
-		surface.daytime = math.random()
+		surface.daytime = mathlib.random()
 	end,
 
 })
@@ -891,8 +891,8 @@ addChaosEffect({
 		returnTable.wind_speed = surface.wind_speed
 		returnTable.wind_orientation_change = surface.wind_orientation_change
 
-		surface.wind_speed = math.random() * (0.5 - 0.25) + 0.25
-		surface.wind_orientation_change = math.random() * (0.001 - 0.0001) + 0.0001
+		surface.wind_speed = mathlib.random() * (0.5 - 0.25) + 0.25
+		surface.wind_orientation_change = mathlib.random() * (0.001 - 0.0001) + 0.0001
 
 		return returnTable
 	end,
@@ -958,7 +958,7 @@ addChaosEffect({
 
 		returnTable.ticks_per_day = surface.ticks_per_day
 
-		surface.ticks_per_day = math.randomRange(600, 1200)
+		surface.ticks_per_day = mathlib.randomRange(600, 1200)
 
 		return returnTable
 	end,
@@ -976,7 +976,7 @@ addChaosEffect({
 	gain = 0,
 	effectFunction = function()
 		local surface = game.players[#game.players].surface
-		local randomNumber = math.random(1, 4)
+		local randomNumber = mathlib.random(1, 4)
 
 		if randomNumber == 1 then
 			surface.daytime = surface.dusk
@@ -1012,14 +1012,14 @@ addChaosEffect({
 		local surface = game.players[#game.players].surface
 		local ticksPerDay = surface.ticks_per_day
 
-		local middleTick = math.floor(math.random() * ((ticksPerDay - 120) - 120) + 120)
-		local leftTick = math.floor(math.random() * ((middleTick - 60) - 60) + 60)
-		local rightTick = math.floor(math.random() * ((ticksPerDay - 60) - (middleTick + 60)) + (middleTick + 60))
+		local middleTick = mathlib.floor(mathlib.random() * ((ticksPerDay - 120) - 120) + 120)
+		local leftTick = mathlib.floor(mathlib.random() * ((middleTick - 60) - 60) + 60)
+		local rightTick = mathlib.floor(mathlib.random() * ((ticksPerDay - 60) - (middleTick + 60)) + (middleTick + 60))
 
-		local duskTick = math.floor(math.random() * (leftTick - 0) + 0)
-		local eveningTick = math.floor(math.random() * (middleTick - (leftTick + 1)) + (leftTick + 1))
-		local morningTick = math.floor(math.random() * (rightTick - (middleTick + 1)) + (middleTick + 1))
-		local dawnTick = math.floor(math.random() * (ticksPerDay - (rightTick + 1)) + (rightTick + 1))
+		local duskTick = mathlib.floor(mathlib.random() * (leftTick - 0) + 0)
+		local eveningTick = mathlib.floor(mathlib.random() * (middleTick - (leftTick + 1)) + (leftTick + 1))
+		local morningTick = mathlib.floor(mathlib.random() * (rightTick - (middleTick + 1)) + (middleTick + 1))
+		local dawnTick = mathlib.floor(mathlib.random() * (ticksPerDay - (rightTick + 1)) + (rightTick + 1))
 
 		surface.dusk = 1 / ticksPerDay
 		surface.evening = 2 / ticksPerDay
@@ -1041,10 +1041,10 @@ addChaosEffect({
 		local surface = game.players[#game.players].surface
 		local modifyingValue
 
-		if math.random() < 0.5 then
-			modifyingValue = math.roundTo(math.randomRange(-1, -0.1), 0.1)
+		if mathlib.random() < 0.5 then
+			modifyingValue = mathlib.roundTo(mathlib.randomRange(-1, -0.1), 0.1)
 		else
-			modifyingValue = math.roundTo(math.randomRange(0.1, 1), 0.1)
+			modifyingValue = mathlib.roundTo(mathlib.randomRange(0.1, 1), 0.1)
 		end
 
 		surface.solar_power_multiplier = surface.solar_power_multiplier + modifyingValue
@@ -1108,7 +1108,7 @@ addChaosEffect({
 		}) do
 			if entity.valid then
 				surface.create_entity {
-					name = searchTable[keys[math.random(#keys)]].name,
+					name = searchTable[keys[mathlib.random(#keys)]].name,
 					position = entity.position
 				}
 			end
@@ -1139,9 +1139,9 @@ addChaosEffect({
 		for k, entity in pairs(surface.find_entities_filtered {
 			type = "tree",
 		}) do
-			if entity.valid and math.random() < 0.1 then
+			if entity.valid and mathlib.random() < 0.1 then
 				surface.create_entity {
-					name = units[math.random(#units)],
+					name = units[mathlib.random(#units)],
 					position = entity.position
 				}
 				entity.destroy {}
@@ -1211,7 +1211,7 @@ addChaosEffect({
 		}) do
 			if entity.valid then
 				surface.create_entity {
-					name = units[math.random(#units)],
+					name = units[mathlib.random(#units)],
 					position = entity.position,
 					force = "enemy"
 				}
@@ -1305,9 +1305,9 @@ addChaosEffect({
 		}) do
 			if entity.valid then
 				surface.create_entity {
-					name = searchTable[keys[math.random(#keys)]].name,
+					name = searchTable[keys[mathlib.random(#keys)]].name,
 					position = entity.position,
-					amount = math.randomRange(10, 1000),
+					amount = mathlib.randomRange(10, 1000),
 					enable_tree_removal = false,
 					enable_cliff_removal = false,
 					snap_to_tile_center = true
@@ -1326,7 +1326,7 @@ addChaosEffect({
 	effectFunction = function()
 		local surface = game.players[#game.players].surface
 		local multiplier = 1
-		local randomNumber = math.random(1, 4)
+		local randomNumber = mathlib.random(1, 4)
 		local returnTable = {}
 
 		if randomNumber == 1 then
@@ -1351,7 +1351,7 @@ addChaosEffect({
 			type = "resource",
 		}) do
 			if entity.valid then
-				entity.amount = math.clamp(math.ceil(entity.amount * multiplier), 1, 4294967295)
+				entity.amount = mathlib.clamp(mathlib.ceil(entity.amount * multiplier), 1, 4294967295)
 			end
 		end
 
@@ -1380,13 +1380,13 @@ addChaosEffect({
 		end
 
 		for i = #keys, 2, -1 do
-			local j = math.random(i)
+			local j = mathlib.random(i)
 			keys[i], keys[j] = keys[j], keys[i]
 		end
 
 		local shuffledTable = {}
 		for i, key in ipairs(keys) do
-			shuffledTable[key] = keys[math.random(#keys)]
+			shuffledTable[key] = keys[mathlib.random(#keys)]
 		end
 
 		for k, entity in pairs(surface.find_entities_filtered {
@@ -1433,7 +1433,7 @@ addChaosEffect({
 			if entity.valid and entity.fluidbox[1] then
 				local fluid = entity.fluidbox[1]
 				entity.fluidbox[1] = {
-					name = searchTable[keys[math.random(#keys)]].name,
+					name = searchTable[keys[mathlib.random(#keys)]].name,
 					amount = fluid.amount,
 					temperature = fluid.temperature
 				}
@@ -1461,7 +1461,7 @@ addChaosEffect({
 			table.insert(keys, key)
 		end
 
-		local randomFluid = keys[math.random(#keys)]
+		local randomFluid = keys[mathlib.random(#keys)]
 
 		for k, entity in pairs(surface.find_entities_filtered {
 			type = { "pipe", "storage-tank" },
@@ -1521,7 +1521,7 @@ addChaosEffect({
 		}) do
 			if entity.valid then
 				surface.create_entity {
-					name = searchTable[keys[math.random(#keys)]].name,
+					name = searchTable[keys[mathlib.random(#keys)]].name,
 					position = entity.position
 				}
 
@@ -1556,7 +1556,7 @@ addChaosEffect({
 				if entity.prototype.module_inventory_size then
 					for i = 1, entity.prototype.module_inventory_size do
 						for j = 1, 10 do
-							local moduleItem = { name = searchTable[keys[math.random(#keys)]].name, count = 1 }
+							local moduleItem = { name = searchTable[keys[mathlib.random(#keys)]].name, count = 1 }
 
 							if entity.can_insert(moduleItem) then
 								entity.insert(moduleItem)
@@ -1591,7 +1591,7 @@ addChaosEffect({
 		}) do
 			if entity.valid then
 				for i = 1, #keys do
-					entity.set_recipe(searchTable[keys[math.random(#keys)]].name)
+					entity.set_recipe(searchTable[keys[mathlib.random(#keys)]].name)
 
 					if entity.get_recipe() then
 						break
@@ -1645,10 +1645,10 @@ addChaosEffect({
 		for k, entity in pairs(surface.find_entities_filtered {
 			type = "resource",
 		}) do
-			if math.random() < 0.02 then
+			if mathlib.random() < 0.02 then
 				if entity.valid and entity.prototype.resource_category == "basic-solid" then
 					surface.create_entity {
-						name = searchTable[keys[math.random(#keys)]].name,
+						name = searchTable[keys[mathlib.random(#keys)]].name,
 						position = entity.position,
 						amount = entity.amount,
 						enable_tree_removal = false,
@@ -1743,7 +1743,7 @@ addChaosEffect({
 			description = {
 				modifyingValue < 0 and "chaos-description.pollution-diffusion-ratio-decreased" or
 				"chaos-description.pollution-diffusion-ratio-increased",
-				math.roundTo((modifyingValue / baseValue) * 100, 1) },
+				mathlib.roundTo((modifyingValue / baseValue) * 100, 1) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -1765,7 +1765,7 @@ addChaosEffect({
 			description = {
 				modifyingValue < 0 and "chaos-description.pollution-min-to-diffuse-decreased" or
 				"chaos-description.pollution-min-to-diffuse-increased",
-				math.roundTo((modifyingValue / baseValue) * 100, 1) },
+				mathlib.roundTo((modifyingValue / baseValue) * 100, 1) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -1853,7 +1853,8 @@ addChaosEffect({
 			gain = modifyingValue < 0 and 2 or -2,
 			description = {
 				modifyingValue < 0 and "chaos-description.evolution-time-factor-decreased" or
-				"chaos-description.evolution-time-factor-increased", math.roundTo((modifyingValue / baseValue) * 100, 1) },
+				"chaos-description.evolution-time-factor-increased", mathlib.roundTo((modifyingValue / baseValue) * 100,
+				1) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -1876,7 +1877,7 @@ addChaosEffect({
 			description = {
 				modifyingValue < 0 and "chaos-description.evolution-destroy-factor-decreased" or
 				"chaos-description.evolution-destroy-factor-increased",
-				math.roundTo((modifyingValue / baseValue) * 100, 1) },
+				mathlib.roundTo((modifyingValue / baseValue) * 100, 1) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -1899,7 +1900,7 @@ addChaosEffect({
 			description = {
 				modifyingValue < 0 and "chaos-description.evolution-pollution-factor-decreased" or
 				"chaos-description.evolution-pollution-factor-increased",
-				math.roundTo((modifyingValue / baseValue) * 100, 1) },
+				mathlib.roundTo((modifyingValue / baseValue) * 100, 1) },
 		}
 	end,
 	resetFunction = function(effectFunctionTable)
@@ -1954,7 +1955,7 @@ addChaosEffect({
 		}) do
 			if entity.valid then
 				surface.create_entity {
-					name = searchTable[keys[math.random(#keys)]].name,
+					name = searchTable[keys[mathlib.random(#keys)]].name,
 					position = entity.position
 				}
 				entity.destroy {}
@@ -1988,9 +1989,9 @@ addChaosEffect({
 		}) do
 			if entity.valid then
 				surface.create_entity {
-					name = searchTable[keys[math.random(#keys)]].name,
+					name = searchTable[keys[mathlib.random(#keys)]].name,
 					position = entity.position,
-					amount = math.randomRange(100, 1000),
+					amount = mathlib.randomRange(100, 1000),
 					enable_tree_removal = false,
 					enable_cliff_removal = false,
 					snap_to_tile_center = true
@@ -2010,12 +2011,12 @@ addChaosEffect({
 	description = { "chaos-description.deplete-random-resources" },
 	effectFunction = function()
 		local surface = game.players[#game.players].surface
-		local randomNumber = math.random(10, 100)
+		local randomNumber = mathlib.random(10, 100)
 
 		for k, entity in pairs(surface.find_entities_filtered {
 			type = "resource",
 		}) do
-			if entity.valid and math.random(1, randomNumber) == 1 then
+			if entity.valid and mathlib.random(1, randomNumber) == 1 then
 				entity.deplete()
 			end
 		end
@@ -2183,7 +2184,7 @@ addChaosEffect({
 			for key, _ in pairs(entities) do
 				table.insert(keys, key)
 			end
-			resource = entities[keys[math.random(#keys)]]
+			resource = entities[keys[mathlib.random(#keys)]]
 
 			if mapGenSettings["autoplace_controls"][resource.name] then
 				mapGenSettings["autoplace_controls"][resource.name].frequency = number
@@ -2221,7 +2222,7 @@ addChaosEffect({
 			for key, _ in pairs(entities) do
 				table.insert(keys, key)
 			end
-			resource = entities[keys[math.random(#keys)]]
+			resource = entities[keys[mathlib.random(#keys)]]
 
 			if mapGenSettings["autoplace_controls"][resource.name] then
 				mapGenSettings["autoplace_controls"][resource.name].size = number
@@ -2259,7 +2260,7 @@ addChaosEffect({
 			for key, _ in pairs(entities) do
 				table.insert(keys, key)
 			end
-			resource = entities[keys[math.random(#keys)]]
+			resource = entities[keys[mathlib.random(#keys)]]
 
 			if mapGenSettings["autoplace_controls"][resource.name] then
 				mapGenSettings["autoplace_controls"][resource.name].richness = number

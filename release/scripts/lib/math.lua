@@ -1,4 +1,6 @@
-function math.clamp(number, minValue, maxValue)
+local mathlib = {}
+
+function mathlib.clamp(number, minValue, maxValue)
 	if number < minValue then
 		return minValue
 	elseif number > maxValue then
@@ -8,7 +10,7 @@ function math.clamp(number, minValue, maxValue)
 	end
 end
 
-function math.clampBottom(number, minValue)
+function mathlib.clampBottom(number, minValue)
 	if number < minValue then
 		return minValue
 	else
@@ -16,7 +18,7 @@ function math.clampBottom(number, minValue)
 	end
 end
 
-function math.clampTop(number, maxValue)
+function mathlib.clampTop(number, maxValue)
 	if number > maxValue then
 		return maxValue
 	else
@@ -24,10 +26,12 @@ function math.clampTop(number, maxValue)
 	end
 end
 
-function math.roundTo(number, increment)
+function mathlib.roundTo(number, increment)
 	return math.floor(number / increment + 0.5) * increment
 end
 
-function math.randomRange(minValue, maxValue)
+function mathlib.randomRange(minValue, maxValue)
 	return math.random() * (maxValue - minValue) + minValue
 end
+
+return mathlib
