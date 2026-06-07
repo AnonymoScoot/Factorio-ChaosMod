@@ -1,113 +1,59 @@
 local print = {}
 
-function print.print_globals(command)
-    if not game then
+function print.player_print(obj, prepend, append)
+    if not game and not game.players[1] then
         return
     end
 
-    local player = game.get_player(command.player_index)
+    local player = game.players[1]
 
-    if not player then
-        return
+    player.print(print.format(prepend) .. print.format(obj) .. print.format(append))
+end
+
+function print.format(value, indent, visited)
+    indent = indent or 0
+    visited = visited or {}
+
+    local pad = string.rep("  ", indent)
+    local t = type(value)
+
+    if t == "nil" then
+        return pad .. ""
     end
 
-    for k, v in pairs(storage) do
-        if type(v) == "number" or type(v) == "string" then
-            player.print(k .. ": " .. v)
+    if t == "number" or t == "string" or t == "boolean" then
+        return pad .. tostring(value)
+    end
+
+    if t ~= "table" then
+        return pad .. "<" .. t .. "> " .. tostring(value)
+    end
+
+    if next(value) == nil then
+        return "{}"
+    end
+
+    if visited[value] then
+        return "{<circular>}"
+    end
+    visited[value] = true
+
+    local result = "{\n"
+
+    for k, v in pairs(value) do
+        local key = "[" .. tostring(k) .. "] = "
+
+        if type(v) == "table" then
+            result = result .. pad .. "  " .. key
+                .. print.format(v, indent + 1, visited) .. "\n"
         else
-            player.print(k .. " (type " .. type(v) .. ")")
+            result = result .. pad .. "  " .. key
+                .. print.format(v, 0, visited) .. "\n"
         end
     end
-end
 
-function print.print_picked_effect(effect)
-    if not game then
-        return
-    end
-
-    local player = game.players[1]
-
-    if not player then
-        return
-    end
-
-    player.print("Effect picked: " .. effect)
-end
-
-function print.print_registered_effect(effect)
-    if not game then
-        return
-    end
-
-    local player = game.players[1]
-
-    if not player then
-        return
-    end
-
-    player.print("New effect registered: " .. effect)
-end
-
-function print.print_active_effects(effects)
-    if not game then
-        return
-    end
-
-    local player = game.players[1]
-
-    if not player then
-        return
-    end
-
-    for k, v in pairs(storage.active_effects) do
-        player.print(v.name)
-    end
-end
-
-function print.print_enabled_effects(effects)
-    print.print(effects)
-end
-
-function print.print_registered_effects(registered_effects)
-    if not game then
-        return
-    end
-
-    local player = game.players[1]
-
-    if not player then
-        return
-    end
-
-    for k, effect in pairs(registered_effects) do
-        player.print("Registered effect: " .. effect.name)
-    end
-end
-
-function print.print(obj)
-    if not game then
-        return
-    end
-
-    local player = game.players[1]
-
-    if not player then
-        return
-    end
-
-    if type(obj) == "number" or type(obj) == "string" then
-        player.print(obj)
-    else
-        if type(obj) == "table" then
-            for k, v in pairs(obj) do
-                if type(v) == "number" or type(v) == "string" then
-                    player.print(k .. ": " .. v)
-                else
-                    player.print(k .. " (type " .. type(v) .. ")")
-                end
-            end
-        end
-    end
+    result = result .. pad .. "}"
+    return result
 end
 
 return print

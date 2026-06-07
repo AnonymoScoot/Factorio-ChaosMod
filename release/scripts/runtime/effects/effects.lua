@@ -14,11 +14,8 @@ function effects.pick_chaos_effect(name)
     local random_number = math.random(1, #effects.enabled_effects)
     local name = name or effects.enabled_effects[random_number]
 
-
-
     if debug_print then
-        debug_print.print_picked_effect(name)
-        debug_print.print(effects.enabled_effects)
+        debug_print.player_print(name, "Picked effect: ")
     end
 
     return {
