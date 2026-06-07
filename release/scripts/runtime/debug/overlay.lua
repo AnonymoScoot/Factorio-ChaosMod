@@ -1,4 +1,4 @@
-local math_lib = require("scripts/lib/math.lua")
+local math_lib = require("scripts/lib/math")
 
 local overlay = {}
 
@@ -16,6 +16,19 @@ function overlay.update(event)
 
     player.gui.screen["debug_overlay"]["label_chaos_refire_interval"].caption = "chaos_timer: " ..
         storage.chaos_timer .. "(" .. math.floor(storage.chaos_timer / 60) .. "s)"
+
+    -- if player.gui.screen["debug_overlay"]["label_chaos_effect"] then
+    --     player.gui.screen["debug_overlay"]["label_chaos_effect"].caption = "effect: " .. effect
+    -- end
+
+end
+
+function overlay.add_effect(effect)
+    local player = game.players[1]
+
+    local chaos_effect = player.gui.screen["debug_overlay"].add { type = "label", name = "label_chaos_effect", caption = "effect: " .. effect.name }
+
+    
 end
 
 return overlay

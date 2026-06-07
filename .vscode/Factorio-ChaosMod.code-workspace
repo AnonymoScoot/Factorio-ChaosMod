@@ -4,5 +4,10 @@
 			"path": ".."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"Lua.workspace.userThirdParty": [
+			"/home/lubos/.config/Code/User/workspaceStorage/9f0a41c063be2b6e26c545c00b89d101/justarandomgeek.factoriomod-debug/sumneko-3rd"
+		],
+		"Lua.workspace.checkThirdParty": "ApplyInMemory"
+	}
 }

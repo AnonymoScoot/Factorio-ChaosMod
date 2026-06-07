@@ -1,11 +1,30 @@
-local debug_print = require("scripts/runtime/debug/print.lua")
+local effects_defines = require("scripts/runtime/effects/defines")
+local debug_print = require("scripts/runtime/debug/print")
 
-local effects = {}
 
-function effects.pick_chaos_effect()
+local effects = {
+    enabled_effects = {}
+}
+
+for key, _ in pairs(effects_defines) do
+    table.insert(effects.enabled_effects, key)
+end
+
+function effects.pick_chaos_effect(name)
+    local random_number = math.random(1, #effects.enabled_effects)
+    local name = name or effects.enabled_effects[random_number]
+
+
+
     if debug_print then
-        debug_print.print_picked_effect("eff")
+        debug_print.print_picked_effect(name)
+        debug_print.print(effects.enabled_effects)
     end
+
+    return {
+        name = name,
+        duration = 180
+    }
 end
 
 return effects
