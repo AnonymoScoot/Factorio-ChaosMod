@@ -1,27 +1,59 @@
-local effects_defines = require("scripts/runtime/effects/defines")
-local debug_print = require("scripts/runtime/debug/print")
-
+local effects_table = require("scripts.effects.defines")
+local debug_print = require("scripts.debug.print")
+local timer = require("scripts.lib.timer")
+local globals = require("scripts.globals.globals")
 
 local effects = {
     enabled_effects = {}
 }
 
-for key, _ in pairs(effects_defines) do
+for key, _ in pairs(effects_table) do
     table.insert(effects.enabled_effects, key)
 end
 
-function effects.pick_chaos_effect(name)
+function effects.pick_chaos_effect()
     local random_number = math.random(1, #effects.enabled_effects)
-    local name = name or effects.enabled_effects[random_number]
+    local effect_name = effects.enabled_effects[random_number]
+    local effect = effects_table[effect_name]
 
     if debug_print then
-        debug_print.player_print(name, "Picked effect: ")
+        debug_print.player_print(effect_name, "Picked effect: ")
     end
 
-    return {
-        name = name,
-        duration = 180
-    }
+    effect.effect_function()
+
+    if effect.duration then
+        effects.add_active_effect(effect_name)
+    end
+end
+
+function effects.add_active_effect(name)
+    local effect = effects_table[name]
+
+    if debug_print then
+        debug_print.player_print(name, "Active effect added: ")
+    end
+
+    local effect_timer = timer.new({
+        duration = effect.duration,
+        fire_only_once = true
+    })
+
+    globals.add_active_effect(name, effect_timer)
+end
+
+function effects.revert_effect_changes(name)
+    local effect = effects_table[name]
+
+    if debug_print then
+        debug_print.player_print(name, "Reverting effect: ")
+    end
+
+    if effect.revert_function then
+        effect.revert_function()
+    end
+
+    globals.remove_active_effect(name)
 end
 
 return effects
@@ -114,7 +146,7 @@ return effects
 --     gainTable[-2] = "[color=255, 64, 64]"
 --     gainTable[-3] = "[color=255, 0, 0]"
 
---     return { "", gainTable[gain], description, "[/color]" }
+--     return { "", gainTable[gain], description, "[.color]" }
 -- end
 
 -- function pickRandomChaosEffect()

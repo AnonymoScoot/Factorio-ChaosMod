@@ -1,4 +1,4 @@
-local timer = require("release.scripts.lib.timer")
+local timer = require("scripts.lib.timer")
 
 local test = {}
 

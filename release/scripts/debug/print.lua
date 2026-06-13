@@ -1,7 +1,11 @@
 local print = {}
 
 function print.player_print(obj, prepend, append)
-    if not game and not game.players[1] then
+    if not game then
+        return
+    end
+
+    if not game.players[1] then
         return
     end
 

@@ -1,5 +1,5 @@
-local mathlib = require("scripts/lib/math")
-local modifiers = require("scripts/lib/modifier")
+local mathlib = require("scripts.lib.math")
+local modifiers = require("scripts.lib.modifier")
 
 local defs = {
 
@@ -8,14 +8,33 @@ local defs = {
 local effects = {
     ["disable-research"] = {
         gain = -1,
-        duration = 10800,
+        duration = 60 * 4,
         description = { "chaos-description.disable-research" },
         effect_function = function()
             game.forces.player.disable_research()
         end,
-        reset_function = function()
+        revert_function = function()
             game.forces.player.enable_research()
         end,
+    },
+    ["chart-random-area"] = {
+        gain = 1,
+        description = { "chaos-description.chart-random-area" },
+        effect_function = function()
+            local surface = game.players[#game.players].surface
+            local randomChunkPosition = surface.get_random_chunk()
+            local boundingBox = {
+                { randomChunkPosition.x * 32 + math.random(-32, 32) * 32,
+                    randomChunkPosition.y * 32 +
+                    math.random(-32, 32) * 32 },
+                { randomChunkPosition.x * 32 + math.random(-32, 32) * 32,
+                    randomChunkPosition.y * 32 +
+                    math.random(-32, 32) * 32 },
+            }
+
+            game.forces.player.chart(surface, boundingBox)
+        end,
+
     }
 }
 
@@ -24,27 +43,7 @@ return effects
 
 
 
--- addChaosEffect({
 
--- 	name = "chart-random-area",
--- 	gain = 1,
--- 	description = { "chaos-description.chart-random-area" },
--- 	effectFunction = function()
--- 		local surface = game.players[#game.players].surface
--- 		local randomChunkPosition = surface.get_random_chunk()
--- 		local boundingBox = {
--- 			{ randomChunkPosition.x * 32 + mathlib.random(-32, 32) * 32,
--- 				randomChunkPosition.y * 32 +
--- 				mathlib.random(-32, 32) * 32 },
--- 			{ randomChunkPosition.x * 32 + mathlib.random(-32, 32) * 32,
--- 				randomChunkPosition.y * 32 +
--- 				mathlib.random(-32, 32) * 32 },
--- 		}
-
--- 		game.forces.player.chart(surface, boundingBox)
--- 	end,
-
--- })
 
 -- addChaosEffect({
 

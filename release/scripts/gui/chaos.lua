@@ -1,9 +1,13 @@
-local gui_settings = require("gui-settings")
+local gui_settings = require("scripts.gui.settings")
 
 local gui = {}
 
 function gui.create_player_gui(event)
     local player = game.get_player(event.player_index)
+
+    if not player then
+        return
+    end
 
     local screen_element = player.gui.screen
     local main_frame = screen_element.add { type = "flow", name = "chaos_frame", direction = "vertical" }
@@ -22,6 +26,10 @@ end
 
 function gui.update_player_gui(event)
     local player = game.get_player(event.player_index)
+
+    if not player then
+        return
+    end
 
     player.gui.screen["chaos_frame"].globallabel.caption = storage.five
 end

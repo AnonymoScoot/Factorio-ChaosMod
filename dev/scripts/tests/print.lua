@@ -1,4 +1,4 @@
-local printd = require("release.scripts.runtime.debug.print")
+local printd = require("release.scripts.debug.print")
 
 local test = {}
 
