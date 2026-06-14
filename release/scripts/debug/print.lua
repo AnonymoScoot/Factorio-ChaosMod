@@ -1,3 +1,5 @@
+local log = require("scripts.debug.log")
+
 local print = {}
 
 function print.player_print(obj, prepend, append)
@@ -11,7 +13,10 @@ function print.player_print(obj, prepend, append)
 
     local player = game.players[1]
 
-    player.print(print.format(prepend) .. print.format(obj) .. print.format(append))
+
+
+    player.print((prepend or "") .. serpent.block(obj) .. (append or ""))
+    log.print(obj, prepend, append)
 end
 
 function print.format(value, indent, visited)

@@ -56,7 +56,15 @@ function Timer:get_time()
 end
 
 function Timer:set_time(time)
+    if time > self.duration then
+        return
+    end
+
     self.time = time
+end
+
+function Timer:get_duration()
+    return self.duration
 end
 
 function Timer:tick()

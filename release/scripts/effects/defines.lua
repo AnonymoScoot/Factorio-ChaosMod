@@ -8,7 +8,7 @@ local defs = {
 local effects = {
     ["disable-research"] = {
         gain = -1,
-        duration = 60 * 4,
+        duration = 60 * 20,
         description = { "chaos-description.disable-research" },
         effect_function = function()
             game.forces.player.disable_research()

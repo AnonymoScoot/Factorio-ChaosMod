@@ -2,6 +2,7 @@ local effects_table = require("scripts.effects.defines")
 local debug_print = require("scripts.debug.print")
 local timer = require("scripts.lib.timer")
 local globals = require("scripts.globals.globals")
+local gui = require("scripts.gui.player")
 
 local effects = {
     enabled_effects = {}
@@ -15,6 +16,7 @@ function effects.pick_chaos_effect()
     local random_number = math.random(1, #effects.enabled_effects)
     local effect_name = effects.enabled_effects[random_number]
     local effect = effects_table[effect_name]
+    local id = math.random(0, 0x7FFFFFFFFFFFF)
 
     if debug_print then
         debug_print.player_print(effect_name, "Picked effect: ")
@@ -22,24 +24,14 @@ function effects.pick_chaos_effect()
 
     effect.effect_function()
 
-    if effect.duration then
-        effects.add_active_effect(effect_name)
-    end
-end
-
-function effects.add_active_effect(name)
-    local effect = effects_table[name]
-
-    if debug_print then
-        debug_print.player_print(name, "Active effect added: ")
-    end
-
-    local effect_timer = timer.new({
-        duration = effect.duration,
-        fire_only_once = true
-    })
-
-    globals.add_active_effect(name, effect_timer)
+    globals.add_active_effect({
+        name = effect_name,
+        timer = timer.new {
+            duration = effect.duration or (60 * 5),
+            fire_only_once = true
+        }
+    }, id)
+    gui.add_effect(effect_name, id)
 end
 
 function effects.revert_effect_changes(name)
@@ -52,8 +44,6 @@ function effects.revert_effect_changes(name)
     if effect.revert_function then
         effect.revert_function()
     end
-
-    globals.remove_active_effect(name)
 end
 
 return effects

@@ -1,37 +1,19 @@
 local mathlib = {}
 
-function mathlib.clamp(number, minValue, maxValue)
-	if number < minValue then
-		return minValue
-	elseif number > maxValue then
-		return maxValue
-	else
-		return number
-	end
+function mathlib.clamp(value, min, max)
+	return math.min(max, math.max(min, value))
 end
 
-function mathlib.clampBottom(number, minValue)
-	if number < minValue then
-		return minValue
-	else
-		return number
-	end
+function mathlib.round_to(value, increment)
+	return math.floor(value / increment + 0.5) * increment
 end
 
-function mathlib.clampTop(number, maxValue)
-	if number > maxValue then
-		return maxValue
-	else
-		return number
-	end
+function mathlib.random_range(min, max)
+	return math.random() * (max - min) + min
 end
 
-function mathlib.roundTo(number, increment)
-	return math.floor(number / increment + 0.5) * increment
-end
-
-function mathlib.randomRange(minValue, maxValue)
-	return math.random() * (maxValue - minValue) + minValue
+function mathlib.normalize(value, min, max)
+	return (value - min) / (max - min)
 end
 
 return mathlib

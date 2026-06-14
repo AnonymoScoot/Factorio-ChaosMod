@@ -1,16 +1,16 @@
--- local player_gui = require("scripts.runtime.gui.player.lua")
+local player_gui = require("scripts.gui.player")
+
 local effects = require("scripts.effects.effects")
 local effects_defines = require("scripts.effects.defines")
 
 local debug_print = require("scripts.debug.print")
-local debug_overlay = require("scripts.debug.overlay")
+-- local debug_overlay = require("scripts.debug.overlay")
 
 local timer = require("scripts.lib.timer")
 local handler = require("scripts.events.handler")
 
 local globals = require("scripts.globals.globals")
-
-
+local log = require("scripts.debug.log")
 
 
 
@@ -37,14 +37,22 @@ handler:add_listener(defines.events.on_player_created, function(event)
 end)
 
 handler:add_listener(defines.events.on_tick, function(event)
-    for name, effect_timer in pairs(storage.active_effects) do
-        if effect_timer:tick() then
-            effects.revert_effect_changes(name)
+    for id, effect in pairs(storage.active_effects) do
+        if effect.timer:tick() then
+            effects.revert_effect_changes(effect.name)
+            globals.remove_active_effect(id)
+            player_gui.remove_effect(event, id)
         end
     end
 
     if storage.chaos_timer:tick() then
         effects.pick_chaos_effect()
+    end
+
+    -- timer.tick_all()
+
+    if player_gui then
+        player_gui.update_player_gui(event)
     end
 
     if debug_overlay then
