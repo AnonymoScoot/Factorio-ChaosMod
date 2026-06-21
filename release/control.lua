@@ -1,7 +1,7 @@
 local player_gui = require("scripts.gui.player")
 
-local effects = require("scripts.effects.effects")
-local effects_defines = require("scripts.effects.defines")
+local chaos = require("scripts.effects.chaos")
+local effects_table = require("scripts.effects.effects")
 
 local debug_print = require("scripts.debug.print")
 -- local debug_overlay = require("scripts.debug.overlay")
@@ -15,7 +15,7 @@ local log = require("scripts.debug.log")
 
 
 commands.add_command("print_enabled_effects", nil, function(command)
-    debug_print.player_print(effects.enabled_effects, "Enabled effects: ")
+    debug_print.player_print(chaos.enabled_effects, "Enabled effects: ")
 end)
 commands.add_command("print_globals", nil, function(command)
     debug_print.player_print(storage, "Globals: ")
@@ -39,14 +39,14 @@ end)
 handler:add_listener(defines.events.on_tick, function(event)
     for id, effect in pairs(storage.active_effects) do
         if effect.timer:tick() then
-            effects.revert_effect_changes(effect.name)
+            chaos.revert_effect_changes(effect.name)
             globals.remove_active_effect(id)
             player_gui.remove_effect(event, id)
         end
     end
 
     if storage.chaos_timer:tick() then
-        effects.pick_chaos_effect()
+        chaos.pick_chaos_effect()
     end
 
     -- timer.tick_all()

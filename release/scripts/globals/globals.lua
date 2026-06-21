@@ -4,7 +4,7 @@ local debug_print = require("scripts.debug.print")
 local globals = {}
 
 storage.chaos_timer = storage.chaos_timer or timer.new {
-    duration = 60 * 5
+    duration = 60 * 2
 }
 storage.active_effects = storage.active_effects or {}
 
